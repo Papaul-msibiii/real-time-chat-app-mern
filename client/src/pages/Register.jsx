@@ -48,8 +48,12 @@ function Register() {
                 })
               }
             />
-            <Button variant="primary" type="submit">
-              {isRegisterLoading ? 'Creating your account...' : 'Register'}
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={isRegisterLoading}
+            >
+              {isRegisterLoading ? "Creating your account..." : "Register"}
             </Button>
 
             {registerError?.error && (
