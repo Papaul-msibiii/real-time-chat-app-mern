@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 
 function navbar() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { user } = useContext(AuthContext);
+  const { user, logoutUser } = useContext(AuthContext);
 
   return (
     <Navbar bg="dark" className="mb-4" style={{ height: "3.75rem" }}>
@@ -15,16 +15,32 @@ function navbar() {
             ChattApp
           </Link>
         </h2>
-        <span className="text-warning">Logged in as {user?.name}</span>
+        {user && <span className="text-warning">Logged in as {user?.name}</span>}
         <Nav>
-            <Stack direction="horizontal" gap={3}>
+          <Stack direction="horizontal" gap={3}>
+            {user && (
+              <Link
+                onClick={() => logoutUser()}
+                to="/login"
+                className="link-light text-decoration-none"
+              >
+                Logout
+              </Link>
+            )}
+            {!user && (
+              <>
                 <Link to="/login" className="link-light text-decoration-none">
-                    Login
+                  Login
                 </Link>
-                <Link to="/register" className="link-light text-decoration-none">
-                    Register
+                <Link
+                  to="/register"
+                  className="link-light text-decoration-none"
+                >
+                  Register
                 </Link>
-            </Stack>
+              </>
+            )}
+          </Stack>
         </Nav>
       </Container>
     </Navbar>
