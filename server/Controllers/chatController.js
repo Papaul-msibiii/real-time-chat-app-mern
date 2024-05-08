@@ -1,8 +1,6 @@
 const chatModel = require("../Models/chatModel");
 
 // createChat
-// findUserChats
-// findChat
 
 const createChat = async (req, res) => {
   const { firstId, secondId } = req.body;
@@ -27,6 +25,8 @@ const createChat = async (req, res) => {
   }
 };
 
+// findUserChats
+
 const findUserChats = async (req, res) => {
   const userId = req.params.userId;
 
@@ -41,6 +41,8 @@ const findUserChats = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+// findChat
 
 const findChat = async (req, res) => {
   const { firstId, secondId } = req.params;
