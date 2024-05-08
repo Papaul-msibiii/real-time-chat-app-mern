@@ -3,10 +3,16 @@ import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 
 function Register() {
-  const { registerInfo, updateRegisterInfo } = useContext(AuthContext);
+  const {
+    registerInfo,
+    updateRegisterInfo,
+    registerUser,
+    registerError,
+    isRegisterLoading,
+  } = useContext(AuthContext);
 
   return (
-    <Form>
+    <Form onSubmit={registerUser}>
       <Row
         style={{
           height: "100vh",
@@ -43,12 +49,14 @@ function Register() {
               }
             />
             <Button variant="primary" type="submit">
-              Register
+              {isRegisterLoading ? 'Creating your account...' : 'Register'}
             </Button>
 
-            <Alert variant="danger">
-              <p>An error occured</p>
-            </Alert>
+            {registerError?.error && (
+              <Alert variant="danger">
+                <p>{registerError?.message}</p>
+              </Alert>
+            )}
           </Stack>
         </Col>
       </Row>
