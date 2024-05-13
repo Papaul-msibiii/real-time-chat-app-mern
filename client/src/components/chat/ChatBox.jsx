@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../../context/ChatContext";
 import { AuthContext } from "../../context/AuthContext";
 import { useFetchRecipientUser } from "../../hooks/useFetchRecipient";
@@ -11,9 +11,15 @@ function ChatBox() {
   const { currentChat, messages, isMessagesLoading, sendTextMessage } =
     useContext(ChatContext);
   const { recipientUser } = useFetchRecipientUser(currentChat, user);
-  const [textMessage, setTextmessage] = useState("");
+  const [textMessage, setTextMessage] = useState("");
+  const scroll = useRef();
 
-  console.log({ textMessage });
+  // console.log({ textMessage });
+
+  useEffect(() => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages])
+  
   if (!recipientUser)
     return (
       <p style={{ textAlign: "center", width: "100%" }}>
@@ -40,6 +46,7 @@ function ChatBox() {
                   ? "message self align-self-end flex-grow-0"
                   : "message align-self-start flex-grow-0"
               }`}
+              ref={scroll}
             >
               <span>{message.text}</span>
               <span className="message-footer">
@@ -51,14 +58,14 @@ function ChatBox() {
       <Stack direction="horizontal" gap={3} className="chat-input flex-grow-0">
         <InputEmoji
           value={textMessage}
-          onChange={setTextmessage}
+          onChange={setTextMessage}
           fontFamily="nunito"
           borderColor="rgba(72, 112, 223, 0.3)"
         />
         <button
           className="send-btn"
           onClick={() =>
-            sendTextMessage(textMessage, user, currentChat._id, setTextmessage)
+            sendTextMessage(textMessage, user, currentChat._id, setTextMessage)
           }
         >
           <svg
