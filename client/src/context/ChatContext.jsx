@@ -24,7 +24,8 @@ export const ChatContextProvider = ({ children, user }) => {
   // console.log({ notifications });
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3000");
+    // eslint-disable-next-line no-undef
+    const newSocket = io(process.env.REACT_APP_SOCKET_URL|| "http://localhost:3000");
     setSocket(newSocket);
 
     return () => {
